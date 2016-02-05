@@ -9,7 +9,7 @@
 
 */
 define('PAYTM_ENVIRONMENT', 'PROD'); // TEST
-define('PAYTM_MERCHANT_KEY', 'XXXXXXXXXXXXXXX'); //Change this constant's value with Merchant key downloaded from portal
+define('PAYTM_MERCHANT_KEY', 'XXXXXXXXXXXXXXX'); //Change this constant's value with Merchant key received from Paytm
 define('PAYTM_MERCHANT_MID', 'WorldP64425807474247'); //Change this constant's value with MID (Merchant ID) received from Paytm
 define('PAYTM_MERCHANT_WEBSITE', 'worldpressplg'); //Change this constant's value with Website name received from Paytm
 
