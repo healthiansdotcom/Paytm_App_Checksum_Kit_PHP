@@ -46,7 +46,7 @@ $encoded_json = htmlentities(json_encode($return_array));
   Redirect back to the app<br>
 
   <form name="frm" method="post">
-    <input type="hidden" id="response" name="responseField" value='<?= $encoded_json?>'>
+    <input type="hidden" id="response" name="responseField" value='<?php echo $encoded_json?>'>
   </form>
 </body>
 </html>
