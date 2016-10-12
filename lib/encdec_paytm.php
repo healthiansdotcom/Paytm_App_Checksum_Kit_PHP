@@ -76,24 +76,43 @@ function getChecksumFromArray($arrayList, $key, $sort=1) {
 	$checksum = encrypt_e($hashString, $key);
 	return $checksum;
 }
-
+function getChecksumFromString($str, $key) {
+	
+	$salt = generateSalt_e(4);
+	$finalString = $str . "|" . $salt;
+	$hash = hash("sha256", $finalString);
+	$hashString = $hash . $salt;
+	$checksum = encrypt_e($hashString, $key);
+	return $checksum;
+}
 function verifychecksum_e($arrayList, $key, $checksumvalue) {
 	$arrayList = removeCheckSumParam($arrayList);
 	ksort($arrayList);
 	$str = getArray2Str($arrayList);
 	$paytm_hash = decrypt_e($checksumvalue, $key);
 	$salt = substr($paytm_hash, -4);
-
 	$finalString = $str . "|" . $salt;
-
 	$website_hash = hash("sha256", $finalString);
 	$website_hash .= $salt;
-
-	$validFlag = FALSE;
+	$validFlag = "FALSE";
 	if ($website_hash == $paytm_hash) {
-		$validFlag = TRUE;
+		$validFlag = "TRUE";
 	} else {
-		$validFlag = FALSE;
+		$validFlag = "FALSE";
+	}
+	return $validFlag;
+}
+function verifychecksum_eFromStr($str, $key, $checksumvalue) {
+	$paytm_hash = decrypt_e($checksumvalue, $key);
+	$salt = substr($paytm_hash, -4);
+	$finalString = $str . "|" . $salt;
+	$website_hash = hash("sha256", $finalString);
+	$website_hash .= $salt;
+	$validFlag = "FALSE";
+	if ($website_hash == $paytm_hash) {
+		$validFlag = "TRUE";
+	} else {
+		$validFlag = "FALSE";
 	}
 	return $validFlag;
 }
