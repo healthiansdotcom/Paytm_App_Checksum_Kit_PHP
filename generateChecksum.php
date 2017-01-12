@@ -8,8 +8,19 @@ require_once("./lib/config_paytm.php");
 require_once("./lib/encdec_paytm.php");
 
 $checkSum = "";
-
-
+// below code snippet is mandatory, so that no one can use your checksumgeneration url for other purpose .
+$findme   = 'REFUND';
+foreach($_POST as $key=>$value)
+{
+  $pos = strpos($value, $findme);
+  if ($pos !== false) 
+    {
+        echo "SECURITY ERROR".$value;
+        $_POST= "";
+        exit();
+    }
+}
+  
 
 //Here checksum string will return by getChecksumFromArray() function.
 $checkSum = getChecksumFromArray($_POST,PAYTM_MERCHANT_KEY);
