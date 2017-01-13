@@ -15,7 +15,7 @@ foreach($_POST as $key=>$value)
   $pos = strpos($value, $findme);
   if ($pos !== false) 
     {
-        echo "SECURITY ERROR".$value;
+        //echo "SECURITY ERROR".$value;
         $_POST= "";
         exit();
     }
