@@ -10,8 +10,42 @@ require_once("./lib/encdec_paytm.php");
 $checkSum = "";
 // below code snippet is mandatory, so that no one can use your checksumgeneration url for other purpose .
 $findme   = 'REFUND';
+$parameterarray = array();
+
+if (!array_key_exists('MID', $_POST)) {
+    $_POST= "";
+    exit();
+}
+if (!array_key_exists('ORDER_ID', $_POST)) {
+    $_POST= "";
+    exit();
+}
+if (!array_key_exists('WEBSITE', $_POST)) {
+    $_POST= "";
+    exit();
+}
+if (!array_key_exists('CHANNEL_ID', $_POST)) {
+    $_POST= "";
+    exit();
+}
+if (!array_key_exists('TXN_AMOUNT', $_POST)) {
+    $_POST= "";
+    exit();
+}
+if (!array_key_exists('INDUSTRY_TYPE_ID', $_POST)) {
+    $_POST= "";
+    exit();
+}
+if (!array_key_exists('CUST_ID', $_POST)) {
+    $_POST= "";
+    exit();
+}
 foreach($_POST as $key=>$value)
 {
+  if(!empty($value))
+    {
+      $parameterarray[$key] = $value;
+    } 
   $pos = strpos($value, $findme);
   if ($pos !== false) 
     {
@@ -20,13 +54,14 @@ foreach($_POST as $key=>$value)
         exit();
     }
 }
+
   
 
 //Here checksum string will return by getChecksumFromArray() function.
-$checkSum = getChecksumFromArray($_POST,PAYTM_MERCHANT_KEY);
+$checkSum = getChecksumFromArray($parameterarray,PAYTM_MERCHANT_KEY);
 //print_r($_POST);
 
- echo json_encode(array("CHECKSUMHASH" => $checkSum,"ORDER_ID" => $_POST["ORDER_ID"], "payt_STATUS" => "1"));
+ echo json_encode(array("CHECKSUMHASH" => $checkSum,"ORDER_ID" => $parameterarray["ORDER_ID"], "payt_STATUS" => "1"));
 
   //Sample response return to SDK
  
